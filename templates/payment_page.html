@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Payment</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS for Styling -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .checkout-container {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 700px;
+            margin: 80px auto;
+        }
+
+        .checkout-container h1 {
+            font-size: 26px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .checkout-container .order-summary,
+        .checkout-container .payment-summary {
+            margin-bottom: 30px;
+        }
+
+        .order-summary table,
+        .payment-summary table {
+            width: 100%;
+        }
+
+        .order-summary td,
+        .payment-summary td {
+            padding: 12px;
+            border-top: 1px solid #f1f1f1;
+        }
+
+        .payment-summary td {
+            font-weight: bold;
+        }
+
+        .payment-btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 18px;
+            width: 100%;
+            border-radius: 4px;
+            border: none;
+        }
+
+        .payment-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .payment-options {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .payment-options img {
+            margin: 10px;
+            max-width: 120px;
+        }
+
+        .back-to-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-home a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-to-home a:hover {
+            text-decoration: underline;
+        }
+
+        /* For Copy Button */
+        .copy-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 15px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="checkout-container">
+            <h1>Complete Your Payment</h1>
+            
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h4>Order Summary</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Replace with dynamic order items -->
+                        <tr>
+                            <td>Item 1</td>
+                            <td>2</td>
+                            <td>₹200</td>
+                        </tr>
+                        <tr>
+                            <td>Item 2</td>
+                            <td>1</td>
+                            <td>₹150</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Payment Summary -->
+            <div class="payment-summary">
+                <h4>Payment Summary</h4>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Total Amount</td>
+                            <td>₹350</td>
+                        </tr>
+                        <tr>
+                            <td>UPI ID</td>
+                            <td>
+                                {{ payment_details.upi_id }}
+                                <!-- Copy Button for UPI ID -->
+                                <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Note</td>
+                            <td>{{ payment_details.note }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- UPI Payment Button -->
+            <!-- 
+            <button class="payment-btn" onclick="window.location.href='{{ payment_details.upi_url }}'">
+                Pay ₹350 via UPI
+            </button>
+            -->
+
+            <!-- Display alternative payment options -->
+            <div class="payment-options">
+                <h4 class="mt-5">Other Payment Options</h4>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" alt="UPI" style="max-width: 80px; margin: 10px;" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Visa_debit_2014_logo.svg/1707px-Visa_debit_2014_logo.svg.png" alt="Credit/Debit Card" style="max-width: 80px; margin: 10px;" />
+                </div>
+            </div>
+            
+
+            <!-- Link back to home -->
+            <div class="back-to-home">
+                <a href="/">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS to copy UPI ID -->
+    <script>
+        function copyToClipboard() {
+            const upiId = document.querySelector("td").innerText; // Grabs the UPI ID
+            const tempInput = document.createElement("input");
+            document.body.appendChild(tempInput);
+            tempInput.value = upiId; // Sets the value to the UPI ID
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            alert("UPI ID copied to clipboard!");
+        }
+    </script>
+</body>
+</html>

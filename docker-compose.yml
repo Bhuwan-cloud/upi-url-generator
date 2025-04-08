@@ -1,0 +1,20 @@
+services:
+  upi-payment-app:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - upi-payment-app
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    restart: always
